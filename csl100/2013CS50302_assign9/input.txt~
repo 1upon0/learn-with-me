@@ -1,0 +1,31 @@
+# lines starting with # are comments
+# new sections are specifed by >[section name]
+>WINDOW
+#w,h
+800 600
+>BALL
+#size speed in pixels
+50 20
+>TREES
+#z,x1,y1,x2,y2,x3,y3,....
+5 20 600 50 400 90 600
+>TERRAIN
+#x,y
+0 100
+100 200
+150 140
+170 110
+200 100
+230 100
+300 110
+310 80
+400 200
+500 500
+501 600
+700 500
+701 200
+800 100
+>TREES
+-1 520 600 550 200 590 600
+-4 220 600 250 10 290 600
+4 320 600 350 10 390 600

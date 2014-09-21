@@ -1,0 +1,10 @@
+lab9: game.o physics.o renderer.o main.o
+	g++ main.o renderer.o game.o physics.o -o lab9 -L -Irosh -lX11 -L/usr/X11R6/lib/
+main.o: main.cpp game.h renderer.h
+	g++ -c main.cpp -o main.o -L -Irosh -lX11 -L/usr/X11R6/lib/
+game.o: game.cpp game.h renderer.h physics.h
+	g++ -c game.cpp -o game.o -L -Irosh -lX11 -L/usr/X11R6/lib/	
+renderer.o: renderer.cpp renderer.h physics.h
+	g++ -c renderer.cpp -o renderer.o -L -Irosh -lX11 -L/usr/X11R6/lib/
+physics.o: physics.cpp physics.h
+	g++ -c physics.cpp -o physics.o -L -Irosh -lX11 -L/usr/X11R6/lib/
