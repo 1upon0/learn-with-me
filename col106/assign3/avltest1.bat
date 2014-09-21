@@ -1,0 +1,2 @@
+avltest < avltest.txt
+cmd
