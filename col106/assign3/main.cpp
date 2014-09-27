@@ -38,7 +38,6 @@ public:
     //return (ulong(h)<<16)|(l&0xffff);
   }
   bool operator > (const emp &b)const{
-    l=10;
     return n>b.n;
   }
   bool operator < (const emp &b)const{

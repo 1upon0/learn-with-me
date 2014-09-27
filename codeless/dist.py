@@ -1,0 +1,1 @@
+for x in range(input()):n=int(raw_input().split()[1]);print n*2-bin(n).count('1')

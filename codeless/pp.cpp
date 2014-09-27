@@ -1,0 +1,2 @@
+#include<iostream>
+int p(int n){int s=0,t=n;for(;n;)s=s*10+n%10,n/=10;return s==t;}int q(int n){int i=2;for(;i*i<=n;)if(!(n%i++))return 0;return 1;}main(){int n,N;std::cin>>N;for(;N--;){std::cin>>n;for(;;)if(p(n++)&&q(n-1)){std::cout<<n-1<<"\n";break;}}}

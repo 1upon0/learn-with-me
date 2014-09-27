@@ -1,0 +1,11 @@
+8
+XXXX.XXX
+...XX.X.
+..XXX.XX
+X.XX..XX
+XX.X...X
+.....X..
+.X.X.X.X
+XXXXXXXX
+1
+3
