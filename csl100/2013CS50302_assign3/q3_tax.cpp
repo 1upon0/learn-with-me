@@ -4,7 +4,7 @@
  */
 
 /*
-It is not clear wether to apply tax slab wise 
+It is not clear whether to apply tax slab wise 
 i.e. 	30% for income excess of 500k,
 		20% for income excess of 200k, below 500k,
 		10% for income excess of 50k, below 200k.
