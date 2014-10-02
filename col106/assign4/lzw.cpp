@@ -1,31 +1,48 @@
 #include<fstream>
+#include<iomanip>
 #include<string>
 #include"hash.h"
 using namespace std;
 int main(int argc,char **argv){
-  fstream fi("input.txt",ios::binary|ios::in);
-  fstream fo("input.lzw",ios::binary|ios::out);
-  char c,C[2]="a";string s="";
+  if(argc<3){
+    cout<<"Usage:\nlzw <input file> <output file>";
+    return 0;
+  }
+  cout<<"Input: "<<argv[1]<<endl;
+  cout<<"Output: "<<argv[2]<<endl;
+  fstream fi(argv[1],ios::binary|ios::in);
+  fstream fo(argv[2],ios::binary|ios::out);
+  char c;
+  vector<uchar> s;
   hashTable T;ulong h;
- for(int i=0;i<256;i++){
-    C[0]=i;
-    T.insert(C);
-  } h=0;
-  string t,ss;
+  s.push_back('a');
+  for(int i=0;i<256;i++){
+    s[0]=i;
+    T.insert(s);
+  }
+  h=0;s.clear();
+  ulong b_read=0,kb_read=0;
   while(fi.read(&c,1)){
+    b_read+=1;
+    if(b_read==1024){
+      kb_read+=1;b_read=0;
+      if(kb_read%100){
+        cout<<"                                             \r";
+        cout<<(kb_read/1024.f)<<std::setprecision(2)<<"mb "<<(T.occupied*100.0/MAX_CODE)<<std::setprecision(2)<<"\r";
+      }
+    }
     s.push_back(c);
     if(!T.find(s,h)){
       fo.write((char*)&h,3);
-      //cout<<t<<"="<<h<<endl;
       T.insert(s);
-      s="";s.push_back(c);
-      T.find(s,h);
-      t=s;
-    }else{
-      t=s;
+      
+      s.clear();
+      s.push_back(c);
+      
+      T.find(s,h); 
     }
   }
-  fo.write((char*)&h,4);
-  //cout<<t<<"="<<h<<endl;
+  fo.write((char*)&h,3);
+  cout<<"\nDone";
   return 0;
 }
