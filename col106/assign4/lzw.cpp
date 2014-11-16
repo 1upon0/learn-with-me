@@ -12,10 +12,10 @@ int main(int argc,char **argv){
   cout<<"Output: "<<argv[2]<<endl;
   fstream fi(argv[1],ios::binary|ios::in);
   fstream fo(argv[2],ios::binary|ios::out);
-  char c;
+  uchar c;
   vector<uchar> s;
   hashTable T;ulong h;
-  s.push_back('a');
+  s.push_back(0);
   for(int i=0;i<256;i++){
     s[0]=i;
     T.insert(s);
@@ -28,21 +28,23 @@ int main(int argc,char **argv){
       kb_read+=1;b_read=0;
       if(kb_read%100){
         cout<<"                                             \r";
-        cout<<(kb_read/1024.f)<<std::setprecision(2)<<"mb "<<(T.occupied*100.0/MAX_CODE)<<std::setprecision(2)<<"\r";
+        cout<<(kb_read/1024.f)<<std::setprecision(2)<<"mb "<<(T.occupied*100.0/T.allocated)<<std::setprecision(2)<<"\r";
       }
     }
     s.push_back(c);
     if(!T.find(s,h)){
+    //  cout<<h<<'\t';
       fo.write((char*)&h,3);
       T.insert(s);
-      
       s.clear();
       s.push_back(c);
       
       T.find(s,h); 
     }
   }
+  //cout<<h<<'\t';
   fo.write((char*)&h,3);
   cout<<"\nDone";
+  //T.print();
   return 0;
 }

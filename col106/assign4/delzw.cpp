@@ -1,6 +1,9 @@
 #include<fstream>
+#include<iostream>
 #include<iomanip>
-#include"hash.h"
+#include<vector>
+typedef unsigned long ulong;
+typedef unsigned char uchar;
 using namespace std;
 int main(int argc,char **argv){
   if(argc<3){
@@ -12,12 +15,13 @@ int main(int argc,char **argv){
   cout<<"Output: "<<argv[2]<<endl;
   fstream fi(argv[1],ios::binary|ios::in);
   fstream fo(argv[2],ios::binary|ios::out);
-  char c;vector<uchar> s;
-  hashTable T;ulong h;
-  s.push_back('a');
+  vector<uchar> s;
+  ulong h;
+  vector< vector<uchar> > strings;
+  s.push_back(0);
   for(int i=0;i<256;i++){
     s[0]=i;
-    T.insert(s);
+    strings.push_back(s);
   }
   ulong tmp;
   h=0;int first=1;
@@ -26,30 +30,27 @@ int main(int argc,char **argv){
   while(fi.read((char*)&h,3))
   {
    b_read+=3;
+   //cout<<h<<"\t";
     if(b_read>=1024){
       kb_read+=1;b_read=0;
       if(kb_read%100){
         cout<<"                                             \r";        
-        cout<<(kb_read/1024.f)<<std::setprecision(2)<<"mb "<<(T.occupied*100.0/MAX_CODE)<<std::setprecision(2)<<"\r";
+        cout<<(kb_read/1024.f)<<std::setprecision(2)<<"mb \r";
       }
     }
-    if(T.can_retrieve(h)){
-      fo.write((char*)&(T.T[h]->at(0)),T.T[h]->size());
-      if(!first){
-        s.push_back((*T.T[h])[0]);
-        if(!T.find(s,tmp))
-        {  
-          T.insert(s);
-        }
-      }
-      s=*T.T[h];
+    if(strings.size()>h){
+      fo.write((char*)&(strings[h][0]),strings[h].size());
+      
+      s.push_back(strings[h][0]);
+      if(s.size()>1)strings.push_back(s);
+      
+      s=strings[h];
     }else{
       s.push_back(s[0]);
-      T.insert(s);
-      fo.write((char*)&(T.T[h]->at(0)),T.T[h]->size());
-      s=*T.T[h];
+      strings.push_back(s);
+      fo.write((char*)&(strings[h][0]),strings[h].size());
+      s=strings[h];
     }
-    first=0;
   }
   return 0;
 }

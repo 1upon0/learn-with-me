@@ -1,0 +1,41 @@
+<?php
+$raw_data=fgets(STDIN);
+$raw_data=trim($raw_data,'[()]');
+$raw_data=explode('),(',$raw_data);
+$data=array();
+
+$max=0;
+
+foreach($raw_data as $row){
+  $row=explode(',',$row);
+  $data[$row[0]]=$row[1];
+  if($max<$row[1])
+    $max=$row[1];
+}
+
+$dy=array();
+$out=array();
+$sign=0;
+$prev_key=-1;
+foreach($data as $x=>&$y){
+  $y/=$max;
+  if($prev_key>=0){
+    $dy[$x] = ($y-$data[$x-1]);
+    if($dy[$x]>0.1||$dy[$x]<-0.1)
+    {
+      if($sign==0)$out[]=$x;
+      if($sign*$dy[$x]<0){
+        if($x-$out[count($out)-1]<=1)
+          continue;
+        $out[count($out)-1].=','.($x-1);
+        $sign=0;
+      }
+      $sign=$dy[$x];
+    }
+  }
+  $prev_key=$x;
+}
+
+if($out){
+  echo '[('.implode('),(',$out).')]';
+}else echo '[]';

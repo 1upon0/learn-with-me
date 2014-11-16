@@ -1,0 +1,25 @@
+void solve(Maze * maze, PriorityQueueADT * pq)
+{
+  if(!maze)
+    return;
+  Point pt[4],p1=maze->getStartPoint(),end=maze->getEndPoint();
+  pq->push(p1);
+  while(!pq->empty()){
+    p1=pq->top();
+    if(p1.isEqual(end)){
+      cout<<"maze solved!!\n\n";
+      return;
+    }
+    maze->setVisited(p1);
+    pq->pop();
+    pt[0]=Point(p1.getRow()-1,p1.getColumn());
+    pt[1]=Point(p1.getRow()+1,p1.getColumn());
+    pt[2]=Point(p1.getRow(),p1.getColumn()+1);
+    pt[3]=Point(p1.getRow(),p1.getColumn()-1);
+    for(int i=0;i<4;i++){
+      if(maze->isInBounds(pt[i])&&!maze->isWall(pt[i])&&!maze->isVisited(pt[i]))
+        pq->push(pt[i]);
+    }
+  }
+  cout<<"maze not solved\n\n";
+}
