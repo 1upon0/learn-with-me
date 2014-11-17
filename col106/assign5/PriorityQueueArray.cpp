@@ -47,7 +47,7 @@ void PriorityQueueArray::perc_up(int n){
 
 void PriorityQueueArray::perc_down(int n){
 	Point t;bool c1,c2;
-	for(int i=n*2;i<=used;i*=2){
+	for(int i=n*2;i<=used;i=n*2){
 		c1=comp(pts[i],pts[n]);
 		c2= (i==used)?true:comp(pts[i+1],pts[n]);
 		if(c1&&c2)
